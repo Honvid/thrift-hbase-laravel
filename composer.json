@@ -6,15 +6,19 @@
   "authors": [
     {
       "name": "张红伟",
-      "email": "hongweizhang@linkdoc.com"
+      "email": "koran12@126.com"
     }
   ],
   "require": {
+    "php": "^7.1",
     "apache/thrift": "^0.11.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.8"
   },
   "autoload": {
     "psr-4": {
-      "Honvid\\Thrift\\": "src"
+      "Honvid\\": "src"
     }
   }
 }

@@ -1,0 +1,20 @@
+{
+  "name": "honvid/thrift-laravel",
+  "version": "1.0.0",
+  "description": "a package for laravel extenstion the thrift.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "张红伟",
+      "email": "hongweizhang@linkdoc.com"
+    }
+  ],
+  "require": {
+    "apache/thrift": "^0.11.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Honvid\\Thrift\\": "src"
+    }
+  }
+}

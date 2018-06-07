@@ -1,7 +1,7 @@
 {
-  "name": "honvid/thrift-laravel",
+  "name": "honvid/thrift-hbase-laravel",
   "version": "1.0.0",
-  "description": "a package for laravel extenstion the thrift.",
+  "description": "use thrift to operator hbase for laravel.",
   "license": "MIT",
   "authors": [
     {

@@ -1,6 +1,7 @@
 {
   "name": "honvid/thrift-hbase-laravel",
   "minimum-stability": "stable",
+  "prefer-stable": true,
   "version": "0.0.1",
   "description": "use thrift to operator hbase for laravel.",
   "license": "MIT",

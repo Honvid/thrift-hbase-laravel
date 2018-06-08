@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Thrift client config file.
+ */
 return [
 
     /*

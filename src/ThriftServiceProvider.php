@@ -1,6 +1,6 @@
 <?php
 
-namespace Honvid\Thrift;
+namespace Honvid;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -21,7 +21,7 @@ class ThriftServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/config/thrift.php' => config_path('thrift.php'),
+            __DIR__.'/./Config/thrift.php' => config_path('thrift.php'),
         ]);
     }
     /**
@@ -44,6 +44,6 @@ class ThriftServiceProvider extends ServiceProvider
     public function provides()
     {
         // 因为延迟加载 所以要定义 provides 函数 具体参考laravel 文档
-        return ['packagetest'];
+        return ['thrift'];
     }
 }

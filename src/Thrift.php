@@ -1,6 +1,6 @@
 <?php
 
-namespace Honvid\Thrift;
+namespace Honvid;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +17,8 @@ use Illuminate\Config\Repository;
 use Thrift\Transport\TSocket;
 use Honvid\Thrift\Hbase\Mutation;
 use Thrift\Protocol\TBinaryProtocol;
-use Honvid\Thrift\Hbase\HbaseClient;
-use Honvid\Thrift\Hbase\BatchMutation;
+use Honvid\Hbase\HbaseClient;
+use Honvid\Hbase\BatchMutation;
 use Thrift\Transport\TFramedTransport;
 
 class Thrift

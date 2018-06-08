@@ -1,6 +1,6 @@
 <?php
 
-namespace Honvid\Thrift\Facades;
+namespace Honvid\Facades;
 
 /*
 |--------------------------------------------------------------------------
@@ -8,7 +8,7 @@ namespace Honvid\Thrift\Facades;
 |--------------------------------------------------------------------------
 | @author    honvid
 | @datetime  2018-06-07 16:34
-| @package   Honvid\Thrift\Facades 
+| @package   Honvid\Facades
 | @description:
 |
 */

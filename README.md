@@ -8,16 +8,16 @@
     
     'providers' => [
         ...
-        LinkDoc\Providers\ThriftServiceProvider::class    
+        Honvid\Providers\ThriftServiceProvider::class    
     ],
     'aliases' => [
         ...
-        'Thrift' => LinkDoc\Facades\Thrift::class
+        'Thrift' => Honvid\Facades\Thrift::class
     ]
 
 最后在命令后执行
 
-    php artisan vendor:publish --provider="LinkDoc\Providers\ThriftServiceProvider"
+    php artisan vendor:publish --provider="Honvid\Providers\ThriftServiceProvider"
     
 在 `config` 目录中会生成 `thrift.php` 文件，修改对应配置即可。
     

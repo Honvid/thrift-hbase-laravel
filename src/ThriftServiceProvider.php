@@ -1,6 +1,6 @@
 <?php
 
-namespace Honvid;
+namespace Honvid\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

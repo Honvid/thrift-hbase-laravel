@@ -15,7 +15,7 @@ namespace Honvid;
 
 use Illuminate\Config\Repository;
 use Thrift\Transport\TSocket;
-use Honvid\Thrift\Hbase\Mutation;
+use Honvid\Hbase\Mutation;
 use Thrift\Protocol\TBinaryProtocol;
 use Honvid\Hbase\HbaseClient;
 use Honvid\Hbase\BatchMutation;
@@ -48,6 +48,7 @@ class Thrift
             $this->callCount = 0;
             $this->transport->open();
         } catch (\Exception $exception) {
+            $this->close();
             throw new \Exception('thrift connect error!', 500);
         }
     }

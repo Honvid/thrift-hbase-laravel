@@ -2,6 +2,7 @@
 
 namespace Honvid\Providers;
 
+use Honvid\Thrift;
 use Illuminate\Support\ServiceProvider;
 
 class ThriftServiceProvider extends ServiceProvider

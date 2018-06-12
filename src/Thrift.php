@@ -23,12 +23,12 @@ use Thrift\Transport\TFramedTransport;
 
 class Thrift
 {
-    private $client;
-    private $protocol;
-    private $transport;
-    private $callCount = 0;
-    private $startRow = 0;
-    private $reqTimeAlarm;
+    public $client;
+    public $protocol;
+    public $transport;
+    public $callCount = 0;
+    public $startRow = 0;
+    public $reqTimeAlarm;
 
     protected $config;
 
@@ -60,7 +60,7 @@ class Thrift
      * @param $rowName
      * @return bool
      */
-    private function getValue($tableName, $columnName, $rowName)
+    public function getValue($tableName, $columnName, $rowName)
     {
         $ret = $this->client->get($tableName, $rowName, $columnName, []);
         if ($ret) {
@@ -78,7 +78,7 @@ class Thrift
      * @param $rowNames
      * @return array
      */
-    private function getValues($tableName, $columnName, $rowNames)
+    public function getValues($tableName, $columnName, $rowNames)
     {
         $this->reqTimeAlarm = count($rowNames) * 1;
 
@@ -102,7 +102,7 @@ class Thrift
      * @param $rowName
      * @return array|bool
      */
-    private function getValueWithColumns($tableName, $columnNames, $rowName)
+    public function getValueWithColumns($tableName, $columnNames, $rowName)
     {
         $ret = [];
         $res = $this->client->getRowWithColumns($tableName, $rowName, $columnNames, []);
@@ -129,7 +129,7 @@ class Thrift
      * @param $rowNames
      * @return array
      */
-    private function getValuesWithColumns($tableName, $columnNames, $rowNames)
+    public function getValuesWithColumns($tableName, $columnNames, $rowNames)
     {
         $this->reqTimeAlarm = count($rowNames) * 1;
 
@@ -154,7 +154,7 @@ class Thrift
      * @return \Generator
      * @throws \Exception
      */
-    private function scan($tableName, $columns = [])
+    public function scan($tableName, $columns = [])
     {
         $scanId = $this->client->scannerOpen($tableName, $this->startRow, $columns, []);
         try {
@@ -180,7 +180,7 @@ class Thrift
      * @param $value
      * @return bool
      */
-    private function setValue($tableName, $columnName, $rowName, $value)
+    public function setValue($tableName, $columnName, $rowName, $value)
     {
         $row = [new Mutation(['column' => $columnName, 'value' => $value])];
 
@@ -197,7 +197,7 @@ class Thrift
      * @param $rowNameValueArr
      * @return bool
      */
-    private function setValues($tableName, $columnName, $rowNameValueArr)
+    public function setValues($tableName, $columnName, $rowNameValueArr)
     {
         $this->reqTimeAlarm = count($rowNameValueArr) * 2;
 
@@ -226,7 +226,7 @@ class Thrift
      * @param $rowName
      * @return bool
      */
-    private function setValueWithColumns($tableName, $columnNameValueArr, $rowName)
+    public function setValueWithColumns($tableName, $columnNameValueArr, $rowName)
     {
         if ( ! is_array($columnNameValueArr) || ! $columnNameValueArr) {
             return false;
@@ -249,7 +249,7 @@ class Thrift
      * @param $rowName
      * @param $column
      */
-    private function deleteByRowColumn($tableName, $rowName, $column)
+    public function deleteByRowColumn($tableName, $rowName, $column)
     {
         $this->client->deleteAll($tableName, $rowName, $column, []);
     }
@@ -260,7 +260,7 @@ class Thrift
      * @param $tableName
      * @param $rowName
      */
-    private function deleteByRow($tableName, $rowName)
+    public function deleteByRow($tableName, $rowName)
     {
         $this->client->deleteAllRow($tableName, $rowName, []);
     }

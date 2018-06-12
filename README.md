@@ -1,6 +1,6 @@
-# thrift-laravel
+# thrift-hbase-laravel
 
-## 安装
+## 安装|Install
     
     composer require honvid/thrift-hbase-laravel
 
@@ -21,7 +21,7 @@
     
 在 `config` 目录中会生成 `thrift.php` 文件，修改对应配置即可。
     
-## 使用
+## 使用|Use Example 
     
     use Thrift;
     

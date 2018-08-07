@@ -13,6 +13,7 @@ namespace Honvid;
 |
 */
 
+use Log;
 use Illuminate\Config\Repository;
 use Thrift\Transport\TSocket;
 use Honvid\Hbase\Mutation;
@@ -29,12 +30,15 @@ class Thrift
     public $callCount = 0;
     public $startRow = 0;
     public $reqTimeAlarm;
-
+    public $scanRetryLimitNum = 5;
+    public $scanLimitNum = 50;
     protected $config;
 
     public function __construct(Repository $config)
     {
         $this->config = $config;
+        $this->scanLimitNum = $this->config->get('thrift.scan_limit_number', 50);
+        $this->scanRetryLimitNum = $this->config->get('thrift.scan_retry_limit_number', 5);
         try {
             $socket = new TSocket($this->config->get('thrift.host', '127.0.0.1'),
                 $this->config->get('thrift.port', '9090'),
@@ -149,27 +153,20 @@ class Thrift
     }
 
     /**
-     * Scan
-     * @param       $tableName
-     * @param array $columns
-     * @return \Generator
-     * @throws \Exception
+     *
+     * @param          $tableName
+     * @param array    $columns
+     * @param callable $callback
      */
-    public function scan($tableName, $columns = [])
+    public function scan($tableName, $columns = [], callable $callback)
     {
-        $scanId = $this->client->scannerOpen($tableName, $this->startRow, $columns, []);
-        try {
-            while ($list = $this->client->scannerGetList($scanId, 50)) {
-                foreach ($list as $result) {
-                    $this->startRow = $result->row;
-                    yield $result->columns;
-                }
+        $i = 0;
+        while ($i < $this->scanRetryLimitNum) {
+            if ( ! $this->_scan($tableName, $columns, $callback)) {
+                $i++;
             }
-            $this->client->scannerClose($scanId);
-        } catch (\Exception $exception) {
-            $this->client->scannerClose($scanId);
-            throw new \Exception($exception->getMessage(), 500);
         }
+
     }
 
     /**
@@ -276,4 +273,35 @@ class Thrift
         }
     }
 
+    /**
+     * @param          $tableName
+     * @param array    $columns
+     * @param callable $callback
+     * @return bool
+     */
+    private function _scan($tableName, $columns = [], callable $callback)
+    {
+        $scanId = $this->client->scannerOpen($tableName, $this->startRow, $columns, []);
+        try {
+            while ($list = $this->client->scannerGetList($scanId, $this->scanLimitNum)) {
+                foreach ($list as $result) {
+                    $this->startRow = $result->row;
+                    //yield $result->columns;
+                    foreach ($columns as $column) {
+                        $value = $result->columns[$column]->value ?? [];
+                        $callback($value);
+                    }
+                }
+            };
+
+            $this->client->scannerClose($scanId);
+        } catch (\Exception $exception) {
+            $this->client->scannerClose($scanId);
+            Log::warning("THRIFT_SCAN_ERROR", $exception->getMessage());
+
+            return false;
+        }
+
+        return true;
+    }
 }
